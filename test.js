@@ -1,6 +1,6 @@
 const got = require('got');
 const App = require('./app')
-const { expect } = require('chai');
+const assert = require('assert');
 
 describe('Static', async () => {
     const app = new App();
@@ -16,7 +16,7 @@ describe('Static', async () => {
     it(`index should return 200 response`, async () => {
         const response = await got(`http://127.0.0.1:1337`);
 
-        expect(response.body).contain('Hello World!');
-        expect(response.statusCode).equal(200);
+        assert.equal(response.body, 'Hello World!');
+        assert.equal(response.statusCode, 200);
     });
 });
