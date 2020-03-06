@@ -1,6 +1,7 @@
 const axios = require('axios');
+const got = require('got');
 const App = require('./app')
-const assert = require('assert');
+const { expect } = require('chai');
 
 describe('Static', async () => {
     const app = new App();
@@ -13,9 +14,15 @@ describe('Static', async () => {
         app.close();
     });
 
-    it(`index should return 200 response`, async () => {
-        const response = await axios.get(`http://127.0.0.1:1337`);
+    it('index should return 200 response with axios', async () => {
+        const response = await axios.get('http://127.0.0.1:1337');
 
-        assert.equal(response.data, 'Hello World!');
+        expect(response.data).equal('Hello World!');
+    });
+
+    it(`index should return 200 response with got`, async () => {
+        const response = await got('http://127.0.0.1:1337');
+
+        expect(response.body).equal('Hello World!');
     });
 });
