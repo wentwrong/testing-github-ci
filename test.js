@@ -1,20 +1,21 @@
-const request = require('request');
-const App = require('./app');
+const axios = require('axios');
+const App = require('./app')
 const assert = require('assert');
 
-function doit() {
+describe('Static', async () => {
     const app = new App();
 
-    app.run();
+    before(() => {
+        app.run();
+    });
 
-    request('http://127.0.0.1:1337', (err, res, body) => {
-        if (err) { return console.log(err); }
-
-        assert.equal(res.body, 'Hello World!');
-        assert.equal(res.statusCode, 200);
-        
+    after(() => {
         app.close();
     });
-}
 
-doit();
+    it(`index should return 200 response`, async () => {
+        const response = await axios.get(`http://127.0.0.1:1337`);
+
+        assert.equal(response.data, 'Hello World!');
+    });
+});
