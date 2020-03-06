@@ -1,22 +1,18 @@
 const got = require('got');
-const App = require('./app')
+const App = require('./app');
 const assert = require('assert');
 
-describe('Static', async () => {
+async function doit() {
     const app = new App();
 
-    before(() => {
-        app.run();
-    });
+    app.run();
 
-    after(() => {
-        app.close();
-    });
+    const response = await got(`http://127.0.0.1:1337`);
 
-    it(`index should return 200 response`, async () => {
-        const response = await got(`http://127.0.0.1:1337`);
+    assert.equal(response.body, 'Hello World!');
+    assert.equal(response.statusCode, 200);
 
-        assert.equal(response.body, 'Hello World!');
-        assert.equal(response.statusCode, 200);
-    });
-});
+    app.close();
+}
+
+doit();
