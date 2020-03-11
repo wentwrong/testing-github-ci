@@ -19,10 +19,4 @@ describe('Static', async () => {
 
         expect(response.data).equal('Hello World!');
     });
-
-    it(`index should return 200 response with got`, async () => {
-        const response = await got('http://127.0.0.1:1337');
-
-        expect(response.body).equal('Hello World!');
-    });
 });
